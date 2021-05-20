@@ -1,4 +1,4 @@
-package io.velog.posting.config;
+package io.velog.posting.zipInputStream.config;
 
 import lombok.Getter;
 import lombok.Setter;

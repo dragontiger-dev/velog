@@ -1,5 +1,6 @@
-package io.velog.posting.config;
+package io.velog.posting.zipInputStream.config;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,7 +15,8 @@ class OpendartPropertiesTest {
     OpendartProperties opendartProperties;
 
     @Test
-    public void OpendartPropertiesInjectionTest() {
+    @DisplayName("환경변수 불러오기")
+    public void OpendartPropertiesLoadTest() {
 
         // Given & When
         String key = opendartProperties.getKey();
