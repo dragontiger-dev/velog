@@ -24,14 +24,14 @@ public class Opendart {
         RestTemplate restTemplate = new RestTemplate();
         UriComponents uriComponents = UriComponentsBuilder
                 .fromHttpUrl(opendartProperties.getUrl())
-                .path("/corpCode.xml")
+                .pathSegment("corpCode.xml")
                 .queryParam("crtfc_key", opendartProperties.getKey())
                 .build();
 
-        return restTemplate.execute(uriComponents.toUriString(), HttpMethod.GET, null, clientHttpResponse -> {
+        return restTemplate.execute(uriComponents.toUriString(), HttpMethod.GET, null, response -> {
 
             Path ZipFile = Files.createTempFile("opendart-", ".zip");
-            Files.write(ZipFile, clientHttpResponse.getBody().readAllBytes());
+            Files.write(ZipFile, response.getBody().readAllBytes());
 
             return ZipFile;
         });

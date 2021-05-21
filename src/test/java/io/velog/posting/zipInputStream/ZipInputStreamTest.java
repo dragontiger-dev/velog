@@ -19,7 +19,8 @@ import java.nio.file.Paths;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 public class ZipInputStreamTest {
@@ -35,17 +36,16 @@ public class ZipInputStreamTest {
         RestTemplate restTemplate = new RestTemplate();
         UriComponents uriComponents = UriComponentsBuilder
                 .fromHttpUrl(opendartProperties.getUrl())
-                .path("/corpCode.xml")
+                .pathSegment("corpCode.xml")
                 .queryParam("crtfc_key", opendartProperties.getKey())
                 .build();
 
         // When
-        Path file = restTemplate.execute(uriComponents.toUriString(), HttpMethod.GET, null, clientHttpResponse -> {
+        Path file = restTemplate.execute(uriComponents.toUriString(), HttpMethod.GET, null, response -> {
+            Path zipFile = Files.createTempFile("opendart-", ".zip");
+            Files.write(zipFile, response.getBody().readAllBytes());
 
-            Path ret = Files.createTempFile("opendart-", ".zip");
-            Files.write(ret, clientHttpResponse.getBody().readAllBytes());
-
-            return ret;
+            return zipFile;
         });
 
         // Then
@@ -75,7 +75,7 @@ public class ZipInputStreamTest {
 
         // When
         while ((zipEntry = zipInputStream.getNextEntry()) != null) {
-            long result = Files.copy(zipInputStream, Paths.get(testDir + zipEntry.getName()));
+            Files.copy(zipInputStream, Paths.get(testDir + zipEntry.getName()));
         }
         zipInputStream.closeEntry();
         zipInputStream.close();

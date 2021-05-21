@@ -15,7 +15,7 @@ class OpendartPropertiesTest {
     OpendartProperties opendartProperties;
 
     @Test
-    @DisplayName("환경변수 불러오기")
+    @DisplayName("프로퍼티에서 환경변수 불러오기")
     public void OpendartPropertiesLoadTest() {
 
         // Given & When
