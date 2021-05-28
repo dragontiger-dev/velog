@@ -1,5 +1,6 @@
 package io.velog.posting.zipInputStream.config;
 
+import io.velog.posting.zipInputStream.Opendart;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,5 +25,10 @@ class OpendartPropertiesTest {
         // Then
         assertNotNull(key);
         assertEquals(System.getenv("OPENDART_KEY"), key);
+    }
+
+    @Test
+    public void OpendartClassTest() {
+        assertEquals(Opendart.class, Opendart.class);
     }
 }
